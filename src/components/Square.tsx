@@ -7,15 +7,31 @@ type SquareProps = {
 };
 
 const Square = ({ value, index }: SquareProps): ReactElement => {
-  const { squares, setSquares, isXNext, setIsXNext } =
-    useContext<GameContextType | null>(gameContext) as GameContextType;
+  const {
+    squares,
+    setSquares,
+    isXNext,
+    setIsXNext,
+    whoIsWinner,
+    history,
+    setHistory,
+  } = useContext<GameContextType | null>(gameContext) as GameContextType;
 
   const handleClick = (): void => {
+    if (whoIsWinner) return;
     const newSquares = [...squares];
     if (newSquares[index]) return;
     newSquares[index] = isXNext ? "X" : "O";
     setSquares(newSquares);
     setIsXNext(!isXNext);
+    setHistory([
+      ...history,
+      {
+        squares: [...squares],
+        player: isXNext ? "O" : "X",
+      },
+    ]);
+    console.log(history);
   };
 
   return (

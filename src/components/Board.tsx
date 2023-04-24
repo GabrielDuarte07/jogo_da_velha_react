@@ -1,11 +1,24 @@
-import { Context, ReactElement, useContext } from "react";
+import { ReactElement, useContext } from "react";
 import { gameContext, GameContextType } from "../contexts/GameContext";
+import Player from "./Player";
+import Square from "./Square";
+import Reset from "./Reset";
 
 const Board = (): ReactElement => {
-  const { squares, setSquares } = useContext<GameContextType | null>(
+  const { squares } = useContext<GameContextType | null>(
     gameContext
   ) as GameContextType;
-  return <h1>Board</h1>;
+  return (
+    <div className="boardContainer">
+      <Player />
+      <Reset />
+      <div className="board">
+        {squares.map((value, index) => (
+          <Square value={value as string} index={index} />
+        ))}
+      </div>
+    </div>
+  );
 };
 
 export default Board;
